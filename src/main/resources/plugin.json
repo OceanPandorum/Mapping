@@ -1,0 +1,7 @@
+{
+  "name": "PandorumPlugin",
+  "author": "OceanPandorum",
+  "main": "pandorum.Main",
+  "description": "Plugin for Mapping",
+  "version": 1.0
+}
