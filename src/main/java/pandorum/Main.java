@@ -8,6 +8,7 @@ import arc.util.Strings;
 import arc.util.Structs;
 import components.Bundle;
 import components.Config;
+import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.game.Teams;
@@ -121,6 +122,24 @@ public class Main extends Plugin{
                 core.items.set(item, count);
             }
             Info.text(player, "$give.success");
+        });
+
+        //Cliffs
+        handler.<Player>register(bundle.get("cliff.name"), bundle.get("cliff.description"), (args, player) -> Map.addCliffs());
+
+        handler.<Player>register(bundle.get("wall.name"), bundle.get("wall.description"), (args, player) -> {
+            int x = Math.round(player.x/8);
+            int y = Math.round(player.y/8);
+
+            Block blocks = Blocks.stoneWall;
+
+            if (blocks != null) {
+                Vars.world.tile(x, y).setBlock(blocks);
+                Vars.world.tile(x, y).setTeam(player.team());
+
+                Call.worldDataBegin();
+                Groups.player.each(p -> Vars.netServer.sendWorldData(p));
+            }
         });
 
     }
